@@ -5,29 +5,37 @@ using namespace std;
 
 class Layer {
 
-protected:
-	std::vector<double> weights;
+private:
+	vector<vector<double>> weights;
 
 public:
-	Layer(int nodes) {
+ 
+	Layer(int nodes, int previous_nodes){
 		//record the number of nodes
-
-		for (int x; x < nodes; x++) {
-
+		cout << "Layer" << endl;
+		for (int x = 0; x < nodes; x++) {
 			// seed the random number generator with the current time
-			std::srand(std::time(nullptr));
+			srand(time(NULL)+x*time(NULL));
+			weights.push_back(vector<double>());
+			for (int y = 0; y < previous_nodes; y++){
 
-			// generate a random value between 0 and RAND_MAX
-			int randomValue = std::rand();
+				// generate a random value between 0 and RAND_MAX
+				int randomValue = rand();
 
-			// scale the random value to a double between 0 and 1
-			double randomDouble = static_cast<double>(randomValue) / RAND_MAX;
-
-			//Add random value which is the intial weight of the node
-			weights.push_back(randomDouble);
+				// scale the random value to a double between 0 and 1
+				double randomDouble = static_cast<double>(randomValue) / RAND_MAX;
+				cout << randomDouble << endl;
+				//Add random value which is the intial weight of the node
+				weights[x].push_back(randomDouble);
+			}
 		}
 	};
-	std::vector<double> getWeights() {
+
+	Layer(int nodes) {
+
+	}
+
+	std::vector<std::vector<double>> getWeights() {
 		return this->weights;
 	};
 

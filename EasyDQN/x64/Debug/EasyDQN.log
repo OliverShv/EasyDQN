@@ -1,1 +1,8 @@
-﻿
+﻿  SequentialModel.cpp
+C:\Users\USER\source\repos\EasyDQN\EasyDQN\Layer.cpp(18,20): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\USER\source\repos\EasyDQN\EasyDQN\SequentialModel.cpp(19,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+C:\Users\USER\source\repos\EasyDQN\EasyDQN\Layer.cpp(18,20): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\USER\source\repos\EasyDQN\EasyDQN\SequentialModel.cpp(19,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  EasyDQN.vcxproj -> C:\Users\USER\source\repos\EasyDQN\x64\Debug\EasyDQN.exe

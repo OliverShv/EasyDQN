@@ -1,26 +1,23 @@
 #include <iostream>
-using namespace std;
-#include "SequentialModel.cpp";
-#include "HiddenLayer.cpp"
-#include "InputLayer.cpp"
-#include "OutputLayer.cpp"
+#include "SequentialModel.cpp"
 
+using namespace std;
 
 int main() {
+    
+    int layers[] = { 2,3,2 };
+    int size = sizeof(layers) / sizeof(layers[0]);
+    SequentialModel* model = new SequentialModel(layers, size);
 
-	SequentialModel* model = new SequentialModel();
+    double input[] = { 2.0, 5.0 };
+    cout << model->predict(input) << endl;
 
-	model->add(new InputLayer(2));
-	model->add(new HiddenLayer(3));
-	model->add(new OutputLayer(2));
+    /*
+    model.train(inputs, outputs, rewards);
 
-	/*
-	model.train(inputs, outputs, rewards);
+    model.save("model.txt");
+    model.load("model.txt");
 
-	model.save("model.txt");
-	model.load("model.txt");
-
-	int input;
-	int output = model.predict(input);*/
-
+    int input;
+    int output = model.predict(input);*/
 }

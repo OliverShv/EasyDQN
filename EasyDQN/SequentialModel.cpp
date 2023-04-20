@@ -6,49 +6,73 @@ using namespace std;
 class SequentialModel {
 
 private:
-	std::vector<Layer*> layers;
+	vector<Layer> layers;
 
-	double calculate(double currentLayer[]) {
+	vector<double> calculate(double input[]) {
+		cout << "calculate" << endl;
+		int numElements = sizeof(input) / sizeof(input[0]); // compute the number of elements in the array
+		vector<double> currentLayer(input, input + numElements);
 
-		for (int x = 0;x < sizeof(layers) - 1; x++) {
-			int numNodes = layers[x + 1]->getWeights().size();
-			std::vector<double> nextLayer(numNodes);
-			std::fill(nextLayer.begin(), nextLayer.end(), 0.0);
-
+		//Go through each layer
+		for (int x = 1; x < layers.size(); x++) {
+			//Create a vector for the dot product of each node with the weights and previous layer nodes
+			int numNodes = layers[x].getWeights().size();
+			vector<double> nextLayer(numNodes);
+			fill(nextLayer.begin(), nextLayer.end(), 0.0);
+			//Go through the math between the current values and new next layer
 			int counter = 0;
-			for (double y : layers[x+1]->getWeights()) {
-				for (int z = 0; z < sizeof(currentLayer); z++) {
+			// the output on each x+1 layer is each node of layer x multiplied by the weight for that relationship
+			for (vector<double> y : layers[x].getWeights()) {
+				for (int z = 0; z < currentLayer.size(); z++) {
 					
-					nextLayer[counter] = y* currentLayer[z];
+					nextLayer[counter] += y[z]* currentLayer[z];
 				}
 				counter++;
 			}
 
-			//fix
-			for (int i = 0; i < numNodes; i++) {
-				currentLayer[i] = nextLayer[i];
+			for (double a : nextLayer) {
+				cout << a << endl;
 			}
 
+			currentLayer = nextLayer;
+
 		}
+
+		return currentLayer;
 	}
 public:
-	SequentialModel() {
+	SequentialModel(int layers[], int size) {
+		//Configure all layers
 
+		add(Layer(layers[0]));
+		for (int x = 1; x < size; x++) {
+			add(Layer(layers[x],layers[x-1]));
+		}
 	};
 
-	void add(Layer* layer) {
+	void add(Layer layer) {
 		this->layers.push_back(layer);
 	};
 
 	int predict(double nodes[]) {
 		//check that input equals input layer nodes
 
-		if (sizeof(nodes) == sizeof(layers[0]) ){
-			
+		cout << "predict" << endl;
+		vector<double> result = calculate(nodes);
+		cout << result.size() << endl;
+		for (double a : result) {
+			cout << a << endl;
 		}
-		else {
-			return NULL;
+		
+		
+		int index = 0;
+		double highest = result[0];
+		for (int x = 1; x < result.size(); x++) {
+			if (result[x] > highest) {
+				index = 1;
+			}
 		}
-
+		
+		return index;
 	}
 };
